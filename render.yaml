@@ -1,0 +1,29 @@
+services:
+  # 🚀 Frontend (React Static Site)
+  - type: static
+    name: networking-sdr-ui
+    env: static
+    buildCommand: "cd frontend && npm install && npm run build"
+    publishPath: "frontend/dist"
+    headers:
+      - path: "/*"
+        name: "Cache-Control"
+        value: "public, max-age=31536000, immutable"
+
+  # ⚙️ Backend (FastAPI Web Service)
+  - type: web
+    name: networking-sdr-api
+    env: python
+    buildCommand: "cd backend && pip install -r requirements.txt"
+    startCommand: "cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: PYTHON_VERSION
+        value: 3.11.6
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: SERPAPI_API_KEY
+        sync: false
+      - key: QDRANT_URL
+        value: ":memory:"
