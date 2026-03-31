@@ -1,0 +1,453 @@
+/* ── Sleek Obsidian Design System (Grey & Black) ──────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Colors - Monochrome Obsidian & Slate */
+  --bg-deep: #080808;
+  --bg-surface: #121212;
+  --bg-card: rgba(22, 22, 22, 0.7);
+  --bg-glass: rgba(255, 255, 255, 0.02);
+  
+  --accent-primary: #e0e0e0; /* Metallic Silver */
+  --accent-glow: rgba(255, 255, 255, 0.1);
+  --accent-secondary: #999999; /* Steel Grey */
+  --accent-success: #88ff88; /* Subtle Green (Minimal) */
+  --accent-warning: #ffaa44; /* Subtle Amber (Minimal) */
+  --accent-error: #ff5555;   /* Subtle Red (Minimal) */
+
+  --text-vibrant: #ffffff;
+  --text-main: #bfbfbf;
+  --text-dim: #8c8c8c;
+  --text-muted: #595959;
+
+  --border-main: rgba(255, 255, 255, 0.08);
+  --border-bright: rgba(255, 255, 255, 0.15);
+
+  /* Geometry @radius-xl: 24px; --radius-lg: 14px; --radius-md: 8px; --radius-sm: 4px; */
+  --radius-xl: 24px;
+  --radius-lg: 14px;
+  --radius-md: 8px;
+  --radius-sm: 4px;
+
+  /* Animation */
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 0.2s ease-out;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-main);
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── Animated Background ──────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.02) 0%, transparent 40%),
+    linear-gradient(to bottom, #080808, #121212);
+  z-index: -1;
+}
+
+/* ── Layout: Split-View Dashboard ─────────────────────────── */
+.app-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Sidebar ──────────────────────────────────────────────── */
+.sidebar {
+  background: #0a0a0a;
+  border-right: 1px solid var(--border-main);
+  backdrop-filter: blur(40px);
+  display: flex;
+  flex-direction: column;
+  padding: 32px 20px;
+  overflow-y: auto;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  filter: grayscale(1); /* Full monochrome brand */
+}
+
+.brand-icon {
+  font-size: 24px;
+  background: linear-gradient(135deg, #ffffff, #888888);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text-vibrant);
+}
+
+.sidebar-title {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  margin-top: 40px;
+  padding: 0 12px;
+}
+
+/* ── Main Content Area ────────────────────────────────────── */
+.main-content {
+  padding: 48px;
+  overflow-y: auto;
+  position: relative;
+  background: #080808;
+}
+
+.content-container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* ── Obsidian Cards ───────────────────────────────────────── */
+.ag-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  transition: var(--transition-smooth);
+  position: relative;
+  backdrop-filter: blur(20px);
+}
+
+.ag-card:hover {
+  border-color: var(--border-bright);
+  background: #181818;
+  transform: translateY(-2px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Command Bar (Search) ─────────────────────────────────── */
+.command-center {
+  margin-bottom: 56px;
+  border-left: 4px solid var(--accent-primary);
+}
+
+.ag-input {
+  background: #000000;
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  color: var(--text-vibrant);
+  font-family: inherit;
+  font-size: 14px;
+  transition: var(--transition-fast);
+}
+
+.ag-input:focus {
+  outline: none;
+  border-color: #666666;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+.btn-primary {
+  background: var(--accent-primary);
+  color: #000;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 16px 32px;
+  font-weight: 800;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(0.9);
+  transform: scale(0.99);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-vibrant);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius-md);
+  padding: 16px 24px;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #fff;
+}
+
+/* ── Status Indicators ────────────────────────────────────── */
+.status-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-main);
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  transition: all var(--transition-smooth);
+}
+
+.status-tag.active { 
+  border-color: var(--text-dim); 
+  color: var(--text-vibrant); 
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ── Pipeline View (Progress) ─────────────────────────────── */
+.pipe-step {
+  padding: 18px;
+  border-radius: var(--radius-md);
+  margin-bottom: 12px;
+  background: #111;
+  border: 1px solid transparent;
+  transition: var(--transition-smooth);
+}
+
+.pipe-step.active {
+  background: #1a1a1a;
+  border-color: var(--border-main);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Intelligence Report (Results) ────────────────────────── */
+.report-lead-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--text-vibrant);
+}
+
+.report-section-title {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.outreach-box {
+  background: #000000;
+  border: 1px solid var(--border-main);
+  padding: 28px;
+  border-radius: var(--radius-lg);
+}
+
+.outreach-text { font-size: 15px; color: var(--accent-primary); line-height: 1.8; }
+
+/* ── History List ────────────────────────────────────────── */
+.history-item {
+  padding: 16px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  border-bottom: 1px solid var(--border-main);
+}
+
+.history-item:hover { background: #181818; }
+.history-item.active { background: #222; border-left: 3px solid #fff; }
+
+/* ── Animations ───────────────────────────────────────────── */
+@keyframes slideIn { from { opacity: 0; filter: blur(5px); } to { opacity: 1; filter: blur(0); } }
+
+.spinner-ag {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* ── Score Meter ───────────────────────────────────────────── */
+.score-meter {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin-top: -6px;
+}
+
+/* ── Sentiment Badge ───────────────────────────────────────── */
+.sentiment-badge {
+  display: flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+/* ── LinkedIn Button ───────────────────────────────────────── */
+.btn-linkedin {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: #000;
+  border: 1px solid #333;
+  border-radius: 4px;
+  color: #aaa;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-linkedin:hover {
+  border-color: #fff;
+  color: #fff;
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.06);
+}
+
+/* ── Copy Button (with feedback state) ────────────────────── */
+.btn-copy {
+  width: 100%;
+  background: #fff;
+  border: none;
+  color: #000;
+  padding: 14px;
+  border-radius: 4px;
+  font-weight: 800;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 1px;
+  font-family: inherit;
+}
+
+.btn-copy:hover {
+  filter: brightness(0.85);
+  transform: scale(0.98);
+}
+
+.btn-copy.copied {
+  background: #88ff88;
+  color: #000;
+  box-shadow: 0 0 20px rgba(136, 255, 136, 0.2);
+}
+
+/* ── Session Analytics Panel ──────────────────────────────── */
+.analytics-panel {
+  margin-top: 24px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-md);
+}
+
+.analytics-title {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.analytics-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.analytics-row:last-child { border-bottom: none; }
+
+.analytics-label {
+  font-size: 10px;
+  color: #555;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.analytics-value {
+  font-size: 11px;
+  color: var(--text-vibrant);
+  font-weight: 800;
+  font-family: 'Space Grotesk', monospace;
+}
+
+/* ── History Item Delete Button ───────────────────────────── */
+.h-delete-btn {
+  float: right;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 10px;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 2px 6px;
+  transition: color 0.2s;
+}
+
+.h-delete-btn:hover { color: var(--accent-error) !important; }
+
+/* ── Animations (missing keyframe) ────────────────────────── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 1100px) {
+  .app-layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+}

@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.venv
+venv/
+ENV/
+
+# Node
+node_modules/
+dist/
+dist-ssr
+*.local
+
+# Environment & Secrets
+.env
+.env.development
+.env.production
+.env.local
+
+# Project Specific
+backend/leads_fallback.csv
+frontend/dist/
+.DS_Store
+*.log
