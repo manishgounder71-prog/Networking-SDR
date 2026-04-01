@@ -62,14 +62,14 @@ try:
         # Init headers if the sheet is empty
         if not _sheet.row_values(1):
             _sheet.append_row(COLUMNS)
-            print("[Storage] ✅ Headers written to Google Sheet.")
+            print("[Storage] OK: Headers written to Google Sheet.")
 
         _use_sheets = True
-        print(f"[Storage] ✅ Google Sheets connected: '{SHEET_NAME}'")
+        print(f"[Storage] OK: Google Sheets connected: '{SHEET_NAME}'")
     else:
-        print(f"[Storage] ⚠️  Credentials file '{CREDS_FILE}' not found.")
+        print(f"[Storage] WARNING: Credentials file '{CREDS_FILE}' not found.")
 except Exception as e:
-    print(f"[Storage] ⚠️  Google Sheets not available ({e}). Using CSV fallback.")
+    print(f"[Storage] INFO: Google Sheets not available ({e}). Using CSV fallback.")
 
 # Ensure CSV fallback has headers
 if not _use_sheets and not FALLBACK_CSV.exists():

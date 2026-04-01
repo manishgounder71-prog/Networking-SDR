@@ -65,14 +65,14 @@ async def fetch_lead_research(name: str, company: Optional[str] = None) -> dict:
         if articles:
             summary = f"Found {len(articles)} recent news articles for {name}."
         else:
-            print(f"[Research] ⚠️ No real news found for {name}. Using mock fallback.")
+            print(f"[Research] WARNING: No real news found for {name}. Using mock fallback.")
             return _mock_research(name, company)
 
     except httpx.HTTPStatusError as e:
-        print(f"[Research] ❌ HTTP {e.response.status_code}: {e}. Falling back to mock.")
+        print(f"[Research] ERROR: HTTP {e.response.status_code}: {e}. Falling back to mock.")
         return _mock_research(name, company)
     except Exception as e:
-        print(f"[Research] ❌ API Exception: {e}. Falling back to mock.")
+        print(f"[Research] ERROR: API Exception: {e}. Falling back to mock.")
         return _mock_research(name, company)
 
     return {

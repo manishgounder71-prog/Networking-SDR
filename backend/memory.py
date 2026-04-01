@@ -56,9 +56,10 @@ try:
             vectors_config=VectorParams(size=VECTOR_SIZE, distance=Distance.COSINE),
         )
     _use_qdrant = True
-    print("[Memory] ✅ Qdrant connected.")
+    print("[Memory] OK: Qdrant connected.")
 except Exception as e:
-    print(f"[Memory] ⚠️  Qdrant not available ({e}). Using in-memory dict fallback.")
+    _use_qdrant = False
+    print(f"[Memory] INFO: Using in-memory dict (Qdrant: {type(e).__name__})")
 
 
 # ── Public API ─────────────────────────────────────────────────────────────

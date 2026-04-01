@@ -15,18 +15,18 @@ try:
     from lyzr_automata import Agent, Task, Pipeline
     from lyzr_automata.ai_models.openai import OpenAIModel
     _lyzr_available = True
-    print("[Agents] ✅ Lyzr SDK loaded.")
+    print("[Agents] OK: Lyzr SDK loaded.")
 except ImportError:
-    print("[Agents] ⚠️  lyzr-automata not installed. Will attempt direct OpenAI fallback.")
+    print("[Agents] INFO: lyzr-automata not installed. Will attempt direct OpenAI fallback.")
 
 # ── Try OpenAI fallback ────────────────────────────────────────────────────
 _openai_available = False
 try:
     import openai
     _openai_available = True
-    print("[Agents] ✅ OpenAI library loaded.")
+    print("[Agents] OK: OpenAI library loaded.")
 except ImportError:
-    print("[Agents] ⚠️  OpenAI library not installed.")
+    print("[Agents] INFO: OpenAI library not installed.")
 
 
 async def generate_suggestions(
