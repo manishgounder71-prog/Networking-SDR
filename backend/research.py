@@ -12,6 +12,11 @@ SERPAPI_BASE = "https://serpapi.com/search"
 ZENSERP_BASE = "https://app.zenserp.com/api/v2/search"
 
 
+def _is_zenserp_key(key: str) -> bool:
+    """Check if key is Zenserp format (UUID-like with dashes)."""
+    return len(key) == 36 and key.count("-") == 4
+
+
 async def fetch_lead_research(name: str, company: Optional[str] = None) -> dict:
     """
     Queries SerpAPI or Zenserp for recent news and information about a lead.
@@ -19,17 +24,15 @@ async def fetch_lead_research(name: str, company: Optional[str] = None) -> dict:
     """
     query = f"{name} {company or ''} news funding latest".strip()
     
-    # Detect Zenserp key format (usually a UUID)
-    is_zenserp = len(SERPAPI_KEY) == 36 and "-" in SERPAPI_KEY
-
+    is_zenserp = _is_zenserp_key(SERPAPI_KEY)
     params = {"q": query}
     url = SERPAPI_BASE
 
     if is_zenserp:
         url = ZENSERP_BASE
         params["apikey"] = SERPAPI_KEY
-        params["tbm"] = "nws"  # Zenserp uses tbm for news tab too
-    else:
+        params["tbm"] = "nws"
+    elif SERPAPI_KEY and SERPAPI_KEY != "your_serpapi_key_here":
         url = SERPAPI_BASE
         params["api_key"] = SERPAPI_KEY
         params["engine"] = "google"
@@ -47,15 +50,8 @@ async def fetch_lead_research(name: str, company: Optional[str] = None) -> dict:
             resp = await client.get(url, params=params)
             resp.raise_for_status()
             data = resp.json()
-            # print(f"[Research] Debug: {data}") # Uncomment for deep debug
 
-        # Parse News Results
-        if is_zenserp:
-            # Zenserp response structure
-            news_results = data.get("news_results", [])
-        else:
-            # SerpAPI response structure
-            news_results = data.get("news_results", [])
+        news_results = data.get("news_results", [])
         
         for item in news_results[:5]:
             articles.append({
@@ -69,11 +65,14 @@ async def fetch_lead_research(name: str, company: Optional[str] = None) -> dict:
         if articles:
             summary = f"Found {len(articles)} recent news articles for {name}."
         else:
-            print(f"[Research] ⚠️ No real news found for {name}. Using high-quality mock fallback for presentation.")
+            print(f"[Research] ⚠️ No real news found for {name}. Using mock fallback.")
             return _mock_research(name, company)
 
+    except httpx.HTTPStatusError as e:
+        print(f"[Research] ❌ HTTP {e.response.status_code}: {e}. Falling back to mock.")
+        return _mock_research(name, company)
     except Exception as e:
-        print(f"[Research] ❌ API Exception: {e}. Falling back to mock for demo.")
+        print(f"[Research] ❌ API Exception: {e}. Falling back to mock.")
         return _mock_research(name, company)
 
     return {

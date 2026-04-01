@@ -190,12 +190,12 @@ def delete_lead(name: str, company: Optional[str] = None) -> bool:
 
     if _use_qdrant:
         try:
+            from qdrant_client.models import PointIdList
             import uuid
-            # Ensure uuid is imported if not already
             point_id = str(uuid.uuid5(uuid.NAMESPACE_DNS, key))
             _qdrant_client.delete(
                 collection_name=COLLECTION_NAME,
-                points_selector=[point_id],
+                points_selector=PointIdList(points=[point_id]),
             )
         except Exception as e:
             print(f"[Memory] Qdrant delete error: {e}")

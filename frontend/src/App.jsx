@@ -182,25 +182,31 @@ export default function App() {
     if (!form.name && !form.company) return
     setLoading(true); setError(null); setResult(null)
 
-    const animateSteps = async () => {
-      for (const step of STEPS) {
-        setStep(step.id)
-        await sleep(800)
-      }
-    }
-
     try {
-      const runner = fetch(`${API_BASE}/process-lead`, {
+      const animateSteps = async () => {
+        for (const step of STEPS) {
+          setStep(step.id)
+          await sleep(800)
+        }
+      }
+
+      const response = await fetch(`${API_BASE}/process-lead`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
-      }).then(r => r.json())
+      })
 
-      const [data] = await Promise.all([runner, animateSteps()])
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`)
+      }
+
+      await animateSteps()
+      const data = await response.json()
       setResult(data)
       fetchData()
-    } catch {
+    } catch (err) {
       setError('API Offline. Please check backend server.')
+      console.error('Submit error:', err)
     } finally {
       setLoading(false); setStep(null)
     }
