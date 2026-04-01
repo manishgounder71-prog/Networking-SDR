@@ -1,13 +1,5 @@
-# Core API framework
-fastapi==0.115.0
-uvicorn[standard]==0.32.1
-python-dotenv==1.0.1
-pydantic==2.9.2
-httpx==0.27.2
-
-# Optional: Uncomment if you have these services configured
-# qdrant-client>=1.11.0
-# gspread>=6.1.0
-# google-auth>=2.34.0
-# lyzr-automata>=0.2.0
-# openai>=1.0.0
+fastapi>=0.100.0
+uvicorn[standard]>=0.20.0
+python-dotenv>=0.19.0
+pydantic>=2.0.0
+httpx>=0.24.0
