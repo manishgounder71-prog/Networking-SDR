@@ -1,57 +1,87 @@
-# Networking SDR | AI Intelligence Command Center ⊡
+# Networking SDR | AI Intelligence Command Center
 
-**Networking SDR** is a high-performance, AI-driven lead intelligence and automated outreach platform built for elite sales engineering. It automates the entire lead acquisition lifecycle: from real-time research and memory indexing to strategic outreach generation.
+AI-powered lead research and outreach suggestion engine for elite sales development teams.
 
-![Preview](C:/Users/manis/.gemini/antigravity/brain/dc7314d1-d4af-4a0f-8a1b-f019f56dd8ed/final_demo_dashboard_1774977155990.png)
+## Features
 
-## 📡 Core Intelligence Engine
+- **Real-time Lead Research** - News, funding, and company intelligence via SerpAPI/Zenserp
+- **AI-Powered Outreach** - GPT-4o generates personalized email templates
+- **Memory System** - Lead history tracking with vector database
+- **CRM Integration** - Google Sheets or CSV backup
+- **Beautiful UI** - Obsidian-themed command center interface
 
-The platform is powered by a multi-agent orchestration layer:
-- **🧠 Memory Scan**: Leverages **Qdrant Vector DB** to maintain longitudinal lead history and context.
-- **🔍 Intelligence Extraction**: Real-time news & funding research via **Zenserp/SerpAPI**.
-- **✨ Agent Strategy**: Deep lead scoring and sentiment analysis using **OpenAI GPT-4o**.
-- **💾 CRM Sync**: Automated data persistence to Google Sheets or local CSV fallback.
+## Quick Start
 
-## 🚀 Key Features
-
-- **Demo Mode**: One-click population of high-quality lead targets (Jensen Huang, Satya Nadella).
-- **Intelligence Log**: Chronologically sorted sidebar of all past research cycles.
-- **Lead Score Meter**: Visual assessment of lead viability based on recent news and sentiment.
-- **Strategic Directives**: AI-generated email subject lines, openers, and value propositions.
-- **Micro-animations**: Premium glassmorphic UI with real-time pipeline progress indicators.
-
-## 🛠️ Tech Stack
-
-- **Backend**: FastAPI, Pydantic, Python-dotenv, Httpx, Qdrant-client.
-- **Frontend**: React (Vite), Vanilla CSS, Lucide Icons.
-- **AI/LLM**: OpenAI GPT models.
-- **Search**: SerpAPI / Zenserp.
-
-## 🚦 Getting Started
-
-### 1. Backend Setup
+### Backend
 ```bash
 cd backend
-python -m venv .venv
-source .venv/bin/activate  # or .venv\Scripts\activate on Windows
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-python main.py
+python -m uvicorn main:app --reload --port 8000
 ```
 
-### 2. Frontend Setup
+### Frontend
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-### 3. Environment Variables
-Create a `.env` file in the `backend/` directory:
-```env
-OPENAI_API_KEY=your_key
-SERPAPI_API_KEY=your_key
-QDRANT_URL=:memory:
+## Deployment to Render
+
+### 1. Fork/Clone Repository
+```bash
+git clone https://github.com/manishgounder71-prog/Networking-SDR.git
+cd Networking-SDR
 ```
 
-## 📜 License
-MIT License - 2026 मनीष गौंडर
+### 2. Create Render Account
+Sign up at [render.com](https://render.com) and connect your GitHub repository.
+
+### 3. Deploy Services
+
+**Backend API:**
+1. Create a new **Web Service**
+2. Set root directory to `backend`
+3. Build command: `pip install -r requirements.txt`
+4. Start command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+5. Add environment variables:
+   - `OPENAI_API_KEY` (your key)
+   - `SERPAPI_API_KEY` (optional)
+   - `QDRANT_URL=:memory:`
+   - `PORT=10000`
+
+**Frontend:**
+1. Create a **Static Site**
+2. Set root directory to `frontend`
+3. Build command: `npm install && npm run build`
+4. Publish directory: `frontend/dist`
+5. Add redirect rule: `/* → /index.html`
+
+### 4. Configure API URL
+For production, set `VITE_API_URL` environment variable in the frontend to your backend URL (e.g., `https://networking-sdr-api.onrender.com`).
+
+## Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `OPENAI_API_KEY` | OpenAI API key | Yes |
+| `LYZR_API_KEY` | Lyzr AI key | No |
+| `SERPAPI_API_KEY` | SerpAPI/Zenserp key | No |
+| `QDRANT_URL` | Qdrant Cloud URL | No |
+| `QDRANT_API_KEY` | Qdrant API key | No |
+
+## Architecture
+
+```
+Frontend (React/Vite) → Backend (FastAPI) → OpenAI/SerpAPI
+                              ↓
+                        Memory (In-Memory/Qdrant)
+                              ↓
+                        Storage (CSV/Google Sheets)
+```
+
+## License
+
+MIT - 2026 Manish Gounder

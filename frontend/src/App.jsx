@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './index.css'
 
-const API_BASE = 'http://localhost:8000'
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 const STEPS = [
   { id: 'memory',      icon: '🧠', label: 'Memory Scan',   desc: 'Checking history...' },
